@@ -1,39 +1,35 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('node:path');
-const connectDB = require('./backend/config/db.config');
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
+const path = require('path');
 
+// Manual check for development mode
+const isDev = process.env.NODE_ENV === 'development electron .' || !app.isPackaged;
+
+// Function to create the main Electron window
 const createWindow = async () => {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   });
 
-  // and load the index.html of the app.
-  await mainWindow.loadFile(`${__dirname}/frontend/dist/index.html`);
-
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    // Development: Load React dev server
+    await mainWindow.loadURL('http://localhost:5173');
+    mainWindow.webContents.openDevTools();
+  } else {
+    // Production: Load React build
+    await mainWindow.loadFile(path.join(__dirname, '../frontend/dist/index.html'));
+  }
 };
 
-connectDB().then();
+// App initialization
+app.whenReady().then(() => {
+  createWindow();
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(async ()  => {
-  await createWindow();
-
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
@@ -41,14 +37,9 @@ app.whenReady().then(async ()  => {
   });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// Quit when all windows are closed, except on macOS
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
