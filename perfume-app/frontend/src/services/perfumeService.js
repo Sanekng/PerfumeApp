@@ -7,7 +7,7 @@ const API_URL = 'http://localhost:3000/api/perfumes';
 export const getPerfumes = async () => {
     try {
         const response = await axios.get(API_URL);
-        return response.data; // API returns { data: [...perfumes], success: true }
+        return response.data.data; // API returns { data: [...perfumes], success: true }
     } catch (error) {
         console.error('Error fetching perfumes:', error);
         throw error;

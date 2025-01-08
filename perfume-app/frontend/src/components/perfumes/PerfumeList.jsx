@@ -12,7 +12,7 @@ const PerfumeList = () => {
         const fetchPerfumes = async () => {
             try {
                 const data = await getPerfumes();
-                setPerfumes(data.data); // API response has "data" field containing the perfumes array
+                setPerfumes(data); // API response has "data" field containing the perfumes array
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -75,9 +75,6 @@ const PerfumeList = () => {
             </table>
             <Link to="/perfumes/create">
                 <button>Создать новый</button>
-            </Link>
-            <Link to={"/sellers"}>
-                <button>Продавцы</button>
             </Link>
         </div>
 );

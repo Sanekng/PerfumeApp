@@ -36,7 +36,8 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('perfume customer');
-        res.status(200).json({data: orders, success: true});
+        console.log(orders);
+        res.status(200).json({ data: orders, success: true }); // Ensure `data` wraps the orders
     } catch (error) {
         res.status(500).json({ error: error.message, success: false });
     }

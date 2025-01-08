@@ -11,7 +11,7 @@ const {PORT} = require('./config/config');
 
 // Allow CORS from the React app running on localhost:5173
 const corsOptions = {
-    origin: 'http://localhost:5173', // Adjust if needed for other origins
+    origin: '*', // Adjust if needed for other origins
     methods: 'GET,POST,PUT,DELETE', // Allow only necessary methods
     credentials: true, // Allow cookies to be sent (if needed)
 };
