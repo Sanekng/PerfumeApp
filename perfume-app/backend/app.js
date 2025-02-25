@@ -6,8 +6,11 @@ const perfumeRoute = require('./routes/perfume.routes');
 const orderRoute = require('./routes/order.routes');
 const notificationRoute = require('./routes/notification.routes');
 const sellerRoute = require('./routes/seller.routes');
+const dashboardRoute = require('./routes/dashboard.routes');
 const connectDB = require('./config/db.config');
 const {PORT} = require('./config/config');
+const errorHandler = require('./middlewares/errorHandler');
+const AppError = require('./utils/app.error');
 
 // Allow CORS from the React app running on localhost:5173
 const corsOptions = {
@@ -26,16 +29,14 @@ app.use('/api/perfumes', perfumeRoute);
 app.use('/api/orders', orderRoute);
 app.use('/api/sellers', sellerRoute);
 app.use('/api/notifications', notificationRoute);
+app.use('/api/dashboard', dashboardRoute);
 
 
-app.use((req, res, next) => {
-    res
-        .status(404)
-        .json({ success: false, message: `Route not found: ${req.originalUrl}` });
-});
+app.all('*', (req, res, next) => {
+    next(new AppError(`Route not found: ${req.originalUrl}`, 404))
+})
 
-// for later use when error middleware is created
-// app.use(errorHandler);
+app.use(errorHandler);
 
 (async()=> {
     try{

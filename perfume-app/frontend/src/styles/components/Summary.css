@@ -1,0 +1,96 @@
+@import "../variables.css";
+
+.summary-container {
+    padding: var(--spacing-md);
+    background: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures spacing between content */
+}
+
+h1 {
+    color: var(--heading-color);
+    font-size: var(--size-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-areas:
+        "cell4 cell4 cell5"
+        "cell3 cell2 cell1";
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    flex-grow: 1; /* Ensures the grid expands dynamically */
+}
+
+.cell1 { grid-area: cell1; }
+.cell2 { grid-area: cell2; }
+.cell3 { grid-area: cell3; }
+.cell4 { grid-area: cell4; }
+.cell5 { grid-area: cell5; }
+
+.stat-card {
+    background-color: var(--accent-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--size-xs);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: scale(1.05);
+}
+
+.stat-card h2 {
+    font-size: var(--size-lg);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-card p {
+    font-size: var(--size-md);
+    font-weight: bold;
+    color: var(--text-color-dark);
+}
+
+.listing-summary ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing-sm);
+}
+
+.listing-summary li {
+    background: var(--background-color-light);
+    padding: var(--spacing-sm);
+    margin: var(--spacing-xs) 0;
+    border-radius: 4px;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-areas:
+            "cell1 cell5"
+            "cell4 cell4"
+            "cell3 cell2";
+
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-areas:
+            "cell1"
+            "cell4"
+            "cell5"
+            "cell2"
+            "cell3";
+        grid-template-columns: 1fr;
+    }
+}

@@ -8,4 +8,11 @@ const customerSchema = new mongoose.Schema({
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 }, { timestamps: true });
 
+customerSchema.virtual('fullName').get(function (){
+    return `${this.name} ${this.surname}`;
+})
+
+customerSchema.set('toJSON', { virtuals: true });
+customerSchema.set('toObject', { virtuals: true });
+
 module.exports = mongoose.model('Customer', customerSchema);

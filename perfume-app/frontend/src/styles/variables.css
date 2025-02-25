@@ -1,0 +1,70 @@
+:root {
+    /* Base Colors */
+    --primary-color: #242F40;
+    --secondary-color: #CCA43B;
+    --accent-color: #FFFFFF;
+    --background-color: #E5E5E5;
+    --text-color: #363636;
+
+    /* Shades and Tints */
+    --primary-color-dark: #1A232F;
+    --primary-color-light: #2E3B4F;
+    --secondary-color-dark: #B38A34;
+    --secondary-color-light: #E6B84D;
+    --accent-color-dark: #F2F2F2;
+    --accent-color-light: #FFFFFF;
+    --background-color-dark: #CCCCCC;
+    --background-color-light: #F0F0F0;
+    --text-color-dark: #1A1A1A;
+    --text-color-light: #4D4D4D;
+
+    /* Semantic Colors */
+    --success-color: #61e4c5;
+    --error-color: #FF9692;
+    --warning-color: #ffd465;
+    --info-color: #80b2ff;
+
+    /* Neutral Colors */
+    --border-color: #DDDDDD;
+    --divider-color: #CCCCCC;
+    --disabled-color: #999999;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(45deg, var(--primary-color), var(--primary-color-dark));
+    --gradient-secondary: linear-gradient(45deg, var(--secondary-color), var(--secondary-color-dark));
+
+    /* Opacity Variations */
+    --primary-color-50: rgba(36, 47, 64, 0.5);
+    --secondary-color-25: rgba(204, 164, 59, 0.25);
+    --accent-color-10: rgba(255, 255, 255, 0.1);
+
+    /* Typography Colors */
+    --heading-color: var(--primary-color);
+    --link-color: var(--secondary-color);
+    --link-hover-color: var(--secondary-color-dark);
+    --placeholder-color: var(--disabled-color);
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Sizes */
+    --size-xs: 12px;
+    --size-sm: 14px;
+    --size-md: 16px;
+    --size-lg: 20px;
+    --size-xl: 24px;
+
+    /* Breakpoints */
+    --breakpoint-mobile: 480px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-desktop: 1024px;
+}

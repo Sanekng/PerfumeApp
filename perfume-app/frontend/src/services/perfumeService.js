@@ -51,10 +51,8 @@ export const updatePerfume = async (id, updatedData) => {
 export const deletePerfume = async (perfumeId) => {
     try {
         const response = await axios.delete(`${API_URL}/${perfumeId}`);
-        return response.data; // API returns { message: 'Perfume deleted', success: true }
+        return response.data; // Returns { message: 'Perfume deleted', success: true }
     } catch (error) {
-        console.error('Error deleting perfume:', error);
-        throw error;
+        throw error.response?.data || error;
     }
-}
-
+};

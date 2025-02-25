@@ -26,16 +26,7 @@ export const getSellerById = async (id) => {
 };
 
 // Create a new seller
-export const createSeller = async (sellerData) => {
-    try {
-        const response = await axios.post(`${API_URL}`, sellerData);
-        console.log('Seller created successfully:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Error creating seller:', error.response?.data || error);
-        throw error;
-    }
-};
+export const createSeller = (data) => axios.post(API_URL, data).then((res) => res.data);
 
 // Update a seller
 export const updateSeller = async (id, updatedData) => {

@@ -1,16 +1,17 @@
 const Perfume = require('../models/perfume.model');
 const Order = require('../models/order.model');
 const Seller = require('../models/seller.model');
+const {Types} = require("mongoose");
 
 
 // Create a new perfume
 exports.createPerfume = async (req, res) => {
     try {
-        const { name, price, quantity, description, image, sellerId } = req.body;
+        const { name, price, quantity, description, image, seller } = req.body;
 
         // Validate seller
-        const seller = await Seller.findById({id: sellerId}, null, null);
-        if (!seller) return res.status(404).json({ message: 'Seller not found', success: false });
+        const sell = await Seller.findById(seller, null, null);
+        if (!sell) return res.status(404).json({ message: 'Seller not found', success: false });
 
         const perfume = new Perfume({
             name,
@@ -18,7 +19,7 @@ exports.createPerfume = async (req, res) => {
             quantity,
             description,
             image,
-            seller: sellerId,
+            seller: seller,
         });
 
         await perfume.save();
@@ -58,17 +59,8 @@ exports.getPerfumeById = async (req, res) => {
 // Update a perfume
 exports.updatePerfume = async (req, res) => {
     try {
-        const { id } = req.params;
-        const updatedData = req.body;
-
-        // Validate perfume
-        const perfume = await Perfume.findByIdAndUpdate({id}, {updatedData}, null );
-        if (!perfume) {
-            console.log('Perfume not found.');
-            return res.status(404).json({ message: 'Perfume not found', success: false });
-        }
-
-        console.log('Perfume updated successfully:', perfume);
+        const perfume = await Perfume.findByIdAndUpdate(req.params.id, req.body, { new: true } );
+        if (!perfume) return res.status(404).json({ message: 'Perfume not found', success: false });
         res.status(200).json({ data: perfume, success: true });
     } catch (error) {
         console.error('Error updating perfume:', error);
@@ -81,10 +73,14 @@ exports.deletePerfume = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Validate if id is a valid ObjectId
+        if (!Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid perfume ID', success: false });
+        }
+
         // Check for existing orders
         const existingOrdersCount = await Order.countDocuments({ perfume: id });
         if (existingOrdersCount > 0) {
-            console.log(`Perfume with ID ${id} has associated orders.`);
             return res.status(400).json({ message: 'Cannot delete perfume with associated orders', success: false });
         }
 
